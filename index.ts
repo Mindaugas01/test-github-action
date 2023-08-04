@@ -25,7 +25,7 @@ export default async function run(): Promise<void> {
     core.setOutput("discussion-url", discussion.url);
   } catch (e) {
     core.debug(e.stack);
-    core.setFailed(e);
+    core.setFailed('Error message lol');
   }
 }
 
