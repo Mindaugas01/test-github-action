@@ -11,6 +11,7 @@ export default async function run(): Promise<void> {
     const title = getInput("title");
     var body = getInput("body");
     const body_filepath = getInput("body-filepath");
+    console.log('repository ID:', repositoryId);
     //if body-filepath is set, use it instead of body
     if (body_filepath) {
       body = fs.readFileSync(body_filepath, "utf8");
