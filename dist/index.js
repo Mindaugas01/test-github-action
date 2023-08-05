@@ -6599,15 +6599,27 @@ class Discussion2 extends Resource {
             console.log('GraphQL Response:', response);
             // this.id = (response.data as ResponseShape).data.createDiscussion.discussion.id;
             // this.url = (response.data as ResponseShape).data.createDiscussion.discussion.url;
-            try {
-                this.id = response.data.data.createDiscussion.discussion.id;
-                this.url = response.data.data.createDiscussion.discussion.url;
+            // try {
+            //   this.id = (response.data as ResponseShape).data.createDiscussion.discussion.id;
+            //   this.url = (response.data as ResponseShape).data.createDiscussion.discussion.url;
+            // } catch (err) {
+            //   console.error('Error extracting discussion details:', err);
+            //   // You might throw the error or handle it in some other way here
+            // }
+            // this.debug(`Discussion Created id: ${this.id}, url: ${this.url}`);
+            const responseData = response.data;
+            if (responseData.errors) {
+                console.error('GraphQL Errors:', responseData.errors);
+                throw new Error('Error executing GraphQL mutation');
             }
-            catch (err) {
-                console.error('Error extracting discussion details:', err);
-                // You might throw the error or handle it in some other way here
+            if (responseData.data && responseData.data.createDiscussion) {
+                this.id = responseData.data.createDiscussion.discussion.id;
+                this.url = responseData.data.createDiscussion.discussion.url;
+                this.debug(`Discussion Created id: ${this.id}, url: ${this.url}`);
             }
-            this.debug(`Discussion Created id: ${this.id}, url: ${this.url}`);
+            else {
+                throw new Error('Unexpected response shape');
+            }
         });
     }
 }
