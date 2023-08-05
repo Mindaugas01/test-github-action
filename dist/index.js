@@ -6503,8 +6503,6 @@ class Resource {
     }
 }
 
-// EXTERNAL MODULE: external "util"
-var external_util_ = __webpack_require__(1669);
 // CONCATENATED MODULE: ./lib/discussion.ts
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -6515,8 +6513,6 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-
-
 
 class Discussion extends Resource {
     constructor(repositoryId, categoryId, title, body) {
@@ -6566,7 +6562,8 @@ class Discussion extends Resource {
                 repositoryId: this.repositoryId,
                 categoryId: this.categoryId,
             });
-            core.debug('GraphQL Response: ' + external_util_.inspect(response, { depth: null }));
+            // core.debug('GraphQL Response: ' + util.inspect(response, { depth: null }));
+            console.log('GraphQL Response:', response);
             this.id = response.data.data.createDiscussion.discussion.id;
             this.url = response.data.data.createDiscussion.discussion.url;
             this.debug(`Discussion Created id: ${this.id}, url: ${this.url}`);
@@ -6600,6 +6597,7 @@ function run() {
             console.log('category ID:', categoryId);
             console.log('title ID:', title);
             console.log('body:', body);
+            console.log('Authorization Toke:', process.env.GH_TOKEN);
             //if body-filepath is set, use it instead of body
             if (body_filepath) {
                 body = fs.readFileSync(body_filepath, "utf8");
@@ -6628,7 +6626,7 @@ function run() {
                 // 'discussion' is null, handle the case where it is not initialized or has a null value
                 console.log("discussion is null or not initialized.");
             }
-            yield discussion.save();
+            // await discussion.save();
             // Set commit sha output
             core.setOutput("discussion-id", discussion.id);
             core.setOutput("discussion-url", discussion.url);
