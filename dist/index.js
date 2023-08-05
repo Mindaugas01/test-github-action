@@ -6605,7 +6605,7 @@ function run() {
         }
         catch (e) {
             core.debug(e.stack);
-            core.setFailed('Error message lol');
+            core.setFailed(e);
         }
     });
 }
