@@ -12,17 +12,21 @@ export default async function run(): Promise<void> {
     var body = getInput("body");
     const body_filepath = getInput("body-filepath");
     console.log('repository ID:', repositoryId);
+    console.log('category ID:', categoryId);
+    console.log('title ID:', title);
+    console.log('body:', body);
     //if body-filepath is set, use it instead of body
     if (body_filepath) {
       body = fs.readFileSync(body_filepath, "utf8");
     }
     // Load Discussion details
-    const discussion = new Discussion(repositoryId, categoryId, title, body);
-    await discussion.save();
+
+    // const discussion = new Discussion(repositoryId, categoryId, title, body);
+    // await discussion.save();
 
     // Set commit sha output
-    core.setOutput("discussion-id", discussion.id);
-    core.setOutput("discussion-url", discussion.url);
+    // core.setOutput("discussion-id", discussion.id);
+    // core.setOutput("discussion-url", discussion.url);
   } catch (e) {
     core.debug(e.stack);
     core.setFailed(e);
