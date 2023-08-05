@@ -6630,7 +6630,7 @@ function run() {
             //   // 'discussion' is null, handle the case where it is not initialized or has a null value
             //   console.log("discussion is null or not initialized.");
             // }
-            yield discussion.save();
+            // await discussion.save();
             // Set commit sha output
             core.setOutput("discussion-id", discussion.id);
             core.setOutput("discussion-url", discussion.url);
