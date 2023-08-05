@@ -6479,7 +6479,8 @@ const pkg = __webpack_require__(306);
 const github = axios_default().create({
     baseURL: `https://api.github.com/`,
     headers: {
-        accept: `application/vnd.github.v3+json`,
+        // accept: `application/vnd.github.v3+json`,
+        accept: `application/vnd.github+json`,
         authorization: `bearer ${process.env.GH_TOKEN}`,
         "user-agent": `${pkg.name}/${pkg.version}`,
     },
@@ -6626,7 +6627,7 @@ function run() {
                 // 'discussion' is null, handle the case where it is not initialized or has a null value
                 console.log("discussion is null or not initialized.");
             }
-            // await discussion.save();
+            yield discussion.save();
             // Set commit sha output
             core.setOutput("discussion-id", discussion.id);
             core.setOutput("discussion-url", discussion.url);
