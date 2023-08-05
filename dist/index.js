@@ -6597,8 +6597,16 @@ class Discussion2 extends Resource {
             });
             // core.debug('GraphQL Response: ' + util.inspect(response, { depth: null }));
             console.log('GraphQL Response:', response);
-            this.id = response.data.data.createDiscussion.discussion.id;
-            this.url = response.data.data.createDiscussion.discussion.url;
+            // this.id = (response.data as ResponseShape).data.createDiscussion.discussion.id;
+            // this.url = (response.data as ResponseShape).data.createDiscussion.discussion.url;
+            try {
+                this.id = response.data.data.createDiscussion.discussion.id;
+                this.url = response.data.data.createDiscussion.discussion.url;
+            }
+            catch (err) {
+                console.error('Error extracting discussion details:', err);
+                // You might throw the error or handle it in some other way here
+            }
             this.debug(`Discussion Created id: ${this.id}, url: ${this.url}`);
         });
     }
