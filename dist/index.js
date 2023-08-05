@@ -6613,7 +6613,8 @@ function run() {
                 throw new Error("title is missing or invalid.");
             }
             const discussion = new Discussion(repositoryId, categoryId, title, body);
-            yield discussion.save();
+            console.log("Discussion:", discussion);
+            // await discussion.save();
             // Set commit sha output
             core.setOutput("discussion-id", discussion.id);
             core.setOutput("discussion-url", discussion.url);

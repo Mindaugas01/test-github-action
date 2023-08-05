@@ -39,7 +39,8 @@ export default async function run(): Promise<void> {
 
     
     const discussion = new Discussion(repositoryId, categoryId, title, body);
-    await discussion.save();
+    console.log("Discussion:", discussion);
+    // await discussion.save();
 
     // Set commit sha output
     core.setOutput("discussion-id", discussion.id);
