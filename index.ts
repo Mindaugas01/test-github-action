@@ -21,12 +21,12 @@ export default async function run(): Promise<void> {
     }
     // Load Discussion details
 
-    // const discussion = new Discussion(repositoryId, categoryId, title, body);
-    // await discussion.save();
+    const discussion = new Discussion(repositoryId, categoryId, title, body);
+    await discussion.save();
 
     // Set commit sha output
-    // core.setOutput("discussion-id", discussion.id);
-    // core.setOutput("discussion-url", discussion.url);
+    core.setOutput("discussion-id", discussion.id);
+    core.setOutput("discussion-url", discussion.url);
   } catch (e) {
     core.debug(e.stack);
     core.setFailed(e);
