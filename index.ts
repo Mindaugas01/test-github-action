@@ -20,7 +20,24 @@ export default async function run(): Promise<void> {
       body = fs.readFileSync(body_filepath, "utf8");
     }
     // Load Discussion details
+    
+    if (repositoryId === null) {
+      throw new Error("repository-id is missing or invalid.");
+    }
 
+    if (categoryId === null) {
+      throw new Error("categoryId is missing or invalid.");
+    }
+
+    if (title === null) {
+      throw new Error("title is missing or invalid.");
+    }
+
+    if (body === null) {
+      throw new Error("title is missing or invalid.");
+    }
+
+    
     const discussion = new Discussion(repositoryId, categoryId, title, body);
     await discussion.save();
 
