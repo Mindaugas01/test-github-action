@@ -6503,6 +6503,8 @@ class Resource {
     }
 }
 
+// EXTERNAL MODULE: external "util"
+var external_util_ = __webpack_require__(1669);
 // CONCATENATED MODULE: ./lib/discussion.ts
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -6513,6 +6515,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+
 
 
 class Discussion extends Resource {
@@ -6563,7 +6566,7 @@ class Discussion extends Resource {
                 repositoryId: this.repositoryId,
                 categoryId: this.categoryId,
             });
-            core.debug('GraphQL Response: ' + JSON.stringify(response));
+            core.debug('GraphQL Response: ' + external_util_.inspect(response, { depth: null }));
             this.id = response.data.data.createDiscussion.discussion.id;
             this.url = response.data.data.createDiscussion.discussion.url;
             this.debug(`Discussion Created id: ${this.id}, url: ${this.url}`);

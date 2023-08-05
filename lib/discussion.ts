@@ -1,5 +1,6 @@
 import * as core from "@actions/core";
 import Resource from "./resource";
+import * as util from 'util';
 
 export class Discussion extends Resource {
   url: string;
@@ -65,7 +66,7 @@ export class Discussion extends Resource {
       }
       
     );
-    core.debug('GraphQL Response: ' + JSON.stringify(response));
+    core.debug('GraphQL Response: ' + util.inspect(response, { depth: null }));
     this.id = (response.data as ResponseShape).data.createDiscussion.discussion.id;
     this.url = (response.data as ResponseShape).data.createDiscussion.discussion.url;
 

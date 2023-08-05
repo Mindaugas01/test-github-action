@@ -4,6 +4,7 @@ import getInput from "./lib/input";
 import { Discussion } from "./lib/discussion";
 const fs = require('fs')
 
+
 export default async function run(): Promise<void> {
   try {
     const repositoryId = getInput("repository-id");
