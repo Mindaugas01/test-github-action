@@ -7,9 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import * as core from "@actions/core";
 import Resource from "./resource";
-import * as util from 'util';
 export class Discussion extends Resource {
     constructor(repositoryId, categoryId, title, body) {
         super();
@@ -58,7 +56,8 @@ export class Discussion extends Resource {
                 repositoryId: this.repositoryId,
                 categoryId: this.categoryId,
             });
-            core.debug('GraphQL Response: ' + util.inspect(response, { depth: null }));
+            // core.debug('GraphQL Response: ' + util.inspect(response, { depth: null }));
+            console.log('GraphQL Response:', response);
             this.id = response.data.data.createDiscussion.discussion.id;
             this.url = response.data.data.createDiscussion.discussion.url;
             this.debug(`Discussion Created id: ${this.id}, url: ${this.url}`);
