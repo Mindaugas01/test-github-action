@@ -38,6 +38,38 @@ export class Discussion2 extends Resource {
     console.log('Save category ID:', this.categoryId);
     console.log('Save title ID:', this.title);
     console.log('Save body:', this.body);
+    // const response = await this.graphql(
+    //   `mutation CreateDiscussion(
+    //     $body: String!
+    //     $title: String!
+    //     $repositoryId: ID!
+    //     $categoryId: ID!
+    //   ) {
+    //     # input type: CreateDiscussionInput
+    //     createDiscussion(
+    //       input: {
+    //         repositoryId: $repositoryId
+    //         categoryId: $categoryId
+    //         body: $body
+    //         title: $title
+    //       }
+    //     ) {
+    //       # response type: CreateDiscussionPayload
+    //       discussion {
+    //         id
+    //         url
+    //       }
+    //     }
+    //   }
+    //   `,
+    //   {
+    //     body: this.body,
+    //     title: this.title,
+    //     repositoryId: this.repositoryId,
+    //     categoryId: this.categoryId,
+    //   }
+      
+    // );
     const response = await this.graphql(
       `mutation CreateDiscussion(
         $body: String!
@@ -45,7 +77,6 @@ export class Discussion2 extends Resource {
         $repositoryId: ID!
         $categoryId: ID!
       ) {
-        # input type: CreateDiscussionInput
         createDiscussion(
           input: {
             repositoryId: $repositoryId
@@ -54,24 +85,21 @@ export class Discussion2 extends Resource {
             title: $title
           }
         ) {
-          # response type: CreateDiscussionPayload
           discussion {
             id
             url
           }
         }
-      }
-      `,
+      }`,
       {
         body: this.body,
         title: this.title,
         repositoryId: this.repositoryId,
         categoryId: this.categoryId,
       }
-      
     );
     // core.debug('GraphQL Response: ' + util.inspect(response, { depth: null }));
-    // console.log('GraphQL Response:', response);
+    console.log('GraphQL Response:', response);
     this.id = (response.data as ResponseShape).data.createDiscussion.discussion.id;
     this.url = (response.data as ResponseShape).data.createDiscussion.discussion.url;
 
