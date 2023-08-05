@@ -16,7 +16,7 @@ export default async function run(): Promise<void> {
     console.log('category ID:', categoryId);
     console.log('title ID:', title);
     console.log('body:', body);
-    console.log('Authorization Toke:', process.env.GH_TOKEN);
+    // console.log('Authorization Toke:', process.env.GH_TOKEN);
     //if body-filepath is set, use it instead of body
     if (body_filepath) {
       body = fs.readFileSync(body_filepath, "utf8");
@@ -40,8 +40,9 @@ export default async function run(): Promise<void> {
     }
 
     
-    const discussion2 = new Discussion(repositoryId, categoryId, title, body);
-    console.log("Discussion:", discussion2);
+    const discussion = new Discussion(repositoryId, categoryId, title, body);
+    console.log("Discussion:", discussion);
+    
 
     // if (discussion !== null) {
     //   // 'discussion' is not null, you can access its properties safely here
@@ -51,11 +52,11 @@ export default async function run(): Promise<void> {
     //   // 'discussion' is null, handle the case where it is not initialized or has a null value
     //   console.log("discussion is null or not initialized.");
     // }
-    await discussion2.save();
+    await discussion.save();
 
     // Set commit sha output
-    core.setOutput("discussion-id", discussion2.id);
-    core.setOutput("discussion-url", discussion2.url);
+    core.setOutput("discussion-id", discussion.id);
+    core.setOutput("discussion-url", discussion.url);
   } catch (e) {
     core.debug(e.stack);
     core.setFailed(e);

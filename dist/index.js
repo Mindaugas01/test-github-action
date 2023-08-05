@@ -6535,38 +6535,45 @@ class Discussion extends Resource {
     }
     save() {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.graphql(`mutation CreateDiscussion(
-        $body: String!
-        $title: String!
-        $repositoryId: ID!
-        $categoryId: ID!
-      ) {
-        # input type: CreateDiscussionInput
-        createDiscussion(
-          input: {
-            repositoryId: $repositoryId
-            categoryId: $categoryId
-            body: $body
-            title: $title
-          }
-        ) {
-          # response type: CreateDiscussionPayload
-          discussion {
-            id
-            url
-          }
-        }
-      }
-      `, {
-                body: this.body,
-                title: this.title,
-                repositoryId: this.repositoryId,
-                categoryId: this.categoryId,
-            });
+            console.log('Save repositoryID', this.repositoryId);
+            console.log('Save category ID:', this.categoryId);
+            console.log('Save title ID:', this.title);
+            console.log('Save body:', this.body);
+            // const response = await this.graphql(
+            //   `mutation CreateDiscussion(
+            //     $body: String!
+            //     $title: String!
+            //     $repositoryId: ID!
+            //     $categoryId: ID!
+            //   ) {
+            //     # input type: CreateDiscussionInput
+            //     createDiscussion(
+            //       input: {
+            //         repositoryId: $repositoryId
+            //         categoryId: $categoryId
+            //         body: $body
+            //         title: $title
+            //       }
+            //     ) {
+            //       # response type: CreateDiscussionPayload
+            //       discussion {
+            //         id
+            //         url
+            //       }
+            //     }
+            //   }
+            //   `,
+            //   {
+            //     body: this.body,
+            //     title: this.title,
+            //     repositoryId: this.repositoryId,
+            //     categoryId: this.categoryId,
+            //   }
+            // );
             // core.debug('GraphQL Response: ' + util.inspect(response, { depth: null }));
-            console.log('GraphQL Response:', response);
-            this.id = response.data.data.createDiscussion.discussion.id;
-            this.url = response.data.data.createDiscussion.discussion.url;
+            // console.log('GraphQL Response:', response);
+            // this.id = (response.data as ResponseShape).data.createDiscussion.discussion.id;
+            // this.url = (response.data as ResponseShape).data.createDiscussion.discussion.url;
             this.debug(`Discussion Created id: ${this.id}, url: ${this.url}`);
         });
     }
@@ -6598,7 +6605,7 @@ function run() {
             console.log('category ID:', categoryId);
             console.log('title ID:', title);
             console.log('body:', body);
-            console.log('Authorization Toke:', process.env.GH_TOKEN);
+            // console.log('Authorization Toke:', process.env.GH_TOKEN);
             //if body-filepath is set, use it instead of body
             if (body_filepath) {
                 body = fs.readFileSync(body_filepath, "utf8");
@@ -6616,8 +6623,8 @@ function run() {
             if (body === null) {
                 throw new Error("title is missing or invalid.");
             }
-            const discussion2 = new Discussion(repositoryId, categoryId, title, body);
-            console.log("Discussion:", discussion2);
+            const discussion = new Discussion(repositoryId, categoryId, title, body);
+            console.log("Discussion:", discussion);
             // if (discussion !== null) {
             //   // 'discussion' is not null, you can access its properties safely here
             //   console.log(discussion.id);
@@ -6626,10 +6633,10 @@ function run() {
             //   // 'discussion' is null, handle the case where it is not initialized or has a null value
             //   console.log("discussion is null or not initialized.");
             // }
-            yield discussion2.save();
+            yield discussion.save();
             // Set commit sha output
-            core.setOutput("discussion-id", discussion2.id);
-            core.setOutput("discussion-url", discussion2.url);
+            core.setOutput("discussion-id", discussion.id);
+            core.setOutput("discussion-url", discussion.url);
         }
         catch (e) {
             core.debug(e.stack);
