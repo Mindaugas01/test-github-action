@@ -6539,13 +6539,43 @@ class Discussion2 extends Resource {
             console.log('Save category ID:', this.categoryId);
             console.log('Save title ID:', this.title);
             console.log('Save body:', this.body);
+            // const response = await this.graphql(
+            //   `mutation CreateDiscussion(
+            //     $body: String!
+            //     $title: String!
+            //     $repositoryId: ID!
+            //     $categoryId: ID!
+            //   ) {
+            //     # input type: CreateDiscussionInput
+            //     createDiscussion(
+            //       input: {
+            //         repositoryId: $repositoryId
+            //         categoryId: $categoryId
+            //         body: $body
+            //         title: $title
+            //       }
+            //     ) {
+            //       # response type: CreateDiscussionPayload
+            //       discussion {
+            //         id
+            //         url
+            //       }
+            //     }
+            //   }
+            //   `,
+            //   {
+            //     body: this.body,
+            //     title: this.title,
+            //     repositoryId: this.repositoryId,
+            //     categoryId: this.categoryId,
+            //   }
+            // );
             const response = yield this.graphql(`mutation CreateDiscussion(
         $body: String!
         $title: String!
         $repositoryId: ID!
         $categoryId: ID!
       ) {
-        # input type: CreateDiscussionInput
         createDiscussion(
           input: {
             repositoryId: $repositoryId
@@ -6554,21 +6584,19 @@ class Discussion2 extends Resource {
             title: $title
           }
         ) {
-          # response type: CreateDiscussionPayload
           discussion {
             id
             url
           }
         }
-      }
-      `, {
+      }`, {
                 body: this.body,
                 title: this.title,
                 repositoryId: this.repositoryId,
                 categoryId: this.categoryId,
             });
             // core.debug('GraphQL Response: ' + util.inspect(response, { depth: null }));
-            // console.log('GraphQL Response:', response);
+            console.log('GraphQL Response:', response);
             this.id = response.data.data.createDiscussion.discussion.id;
             this.url = response.data.data.createDiscussion.discussion.url;
             this.debug(`Discussion Created id: ${this.id}, url: ${this.url}`);
@@ -6630,7 +6658,7 @@ function run() {
             //   // 'discussion' is null, handle the case where it is not initialized or has a null value
             //   console.log("discussion is null or not initialized.");
             // }
-            // await discussion.save();
+            yield discussion.save();
             // Set commit sha output
             core.setOutput("discussion-id", discussion.id);
             core.setOutput("discussion-url", discussion.url);
