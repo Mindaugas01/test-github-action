@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 
 import getInput from "./lib/input";
-import { Discussion } from "./lib/discussion";
+import { Discussion2 } from "./lib/discussion";
 const fs = require('fs')
 
 
@@ -40,7 +40,7 @@ export default async function run(): Promise<void> {
     }
 
     
-    const discussion = new Discussion(repositoryId, categoryId, title, body);
+    const discussion = new Discussion2(repositoryId, categoryId, title, body);
     console.log("Discussion:", discussion);
     
 

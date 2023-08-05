@@ -6479,8 +6479,8 @@ const pkg = __webpack_require__(306);
 const github = axios_default().create({
     baseURL: `https://api.github.com/`,
     headers: {
-        // accept: `application/vnd.github.v3+json`,
-        accept: `application/vnd.github+json`,
+        accept: `application/vnd.github.v3+json`,
+        // accept: `application/vnd.github+json`,
         authorization: `bearer ${process.env.GH_TOKEN}`,
         "user-agent": `${pkg.name}/${pkg.version}`,
     },
@@ -6515,7 +6515,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
     });
 };
 
-class Discussion extends Resource {
+class Discussion2 extends Resource {
     constructor(repositoryId, categoryId, title, body) {
         super();
         this.repositoryId = repositoryId;
@@ -6539,41 +6539,38 @@ class Discussion extends Resource {
             console.log('Save category ID:', this.categoryId);
             console.log('Save title ID:', this.title);
             console.log('Save body:', this.body);
-            // const response = await this.graphql(
-            //   `mutation CreateDiscussion(
-            //     $body: String!
-            //     $title: String!
-            //     $repositoryId: ID!
-            //     $categoryId: ID!
-            //   ) {
-            //     # input type: CreateDiscussionInput
-            //     createDiscussion(
-            //       input: {
-            //         repositoryId: $repositoryId
-            //         categoryId: $categoryId
-            //         body: $body
-            //         title: $title
-            //       }
-            //     ) {
-            //       # response type: CreateDiscussionPayload
-            //       discussion {
-            //         id
-            //         url
-            //       }
-            //     }
-            //   }
-            //   `,
-            //   {
-            //     body: this.body,
-            //     title: this.title,
-            //     repositoryId: this.repositoryId,
-            //     categoryId: this.categoryId,
-            //   }
-            // );
+            const response = yield this.graphql(`mutation CreateDiscussion(
+        $body: String!
+        $title: String!
+        $repositoryId: ID!
+        $categoryId: ID!
+      ) {
+        # input type: CreateDiscussionInput
+        createDiscussion(
+          input: {
+            repositoryId: $repositoryId
+            categoryId: $categoryId
+            body: $body
+            title: $title
+          }
+        ) {
+          # response type: CreateDiscussionPayload
+          discussion {
+            id
+            url
+          }
+        }
+      }
+      `, {
+                body: this.body,
+                title: this.title,
+                repositoryId: this.repositoryId,
+                categoryId: this.categoryId,
+            });
             // core.debug('GraphQL Response: ' + util.inspect(response, { depth: null }));
             // console.log('GraphQL Response:', response);
-            // this.id = (response.data as ResponseShape).data.createDiscussion.discussion.id;
-            // this.url = (response.data as ResponseShape).data.createDiscussion.discussion.url;
+            this.id = response.data.data.createDiscussion.discussion.id;
+            this.url = response.data.data.createDiscussion.discussion.url;
             this.debug(`Discussion Created id: ${this.id}, url: ${this.url}`);
         });
     }
@@ -6623,7 +6620,7 @@ function run() {
             if (body === null) {
                 throw new Error("title is missing or invalid.");
             }
-            const discussion = new Discussion(repositoryId, categoryId, title, body);
+            const discussion = new Discussion2(repositoryId, categoryId, title, body);
             console.log("Discussion:", discussion);
             // if (discussion !== null) {
             //   // 'discussion' is not null, you can access its properties safely here

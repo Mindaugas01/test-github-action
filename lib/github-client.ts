@@ -6,8 +6,8 @@ const pkg = require("../package.json");
 const github = axios.create({
   baseURL: `https://api.github.com/`,
   headers: {
-    // accept: `application/vnd.github.v3+json`,
-    accept: `application/vnd.github+json`,
+    accept: `application/vnd.github.v3+json`,
+    // accept: `application/vnd.github+json`,
     authorization: `bearer ${process.env.GH_TOKEN}`,
     "user-agent": `${pkg.name}/${pkg.version}`,
   },
