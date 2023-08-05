@@ -49,7 +49,7 @@ export default async function run(): Promise<void> {
       // 'discussion' is null, handle the case where it is not initialized or has a null value
       console.log("discussion is null or not initialized.");
     }
-    // await discussion.save();
+    await discussion.save();
 
     // Set commit sha output
     core.setOutput("discussion-id", discussion.id);
