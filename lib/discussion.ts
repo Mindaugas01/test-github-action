@@ -63,7 +63,9 @@ export class Discussion extends Resource {
         repositoryId: this.repositoryId,
         categoryId: this.categoryId,
       }
+      
     );
+    core.debug('GraphQL Response: ' + JSON.stringify(response));
     this.id = (response.data as ResponseShape).data.createDiscussion.discussion.id;
     this.url = (response.data as ResponseShape).data.createDiscussion.discussion.url;
 

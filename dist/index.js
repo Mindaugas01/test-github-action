@@ -6514,6 +6514,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
     });
 };
 
+
 class Discussion extends Resource {
     constructor(repositoryId, categoryId, title, body) {
         super();
@@ -6562,6 +6563,7 @@ class Discussion extends Resource {
                 repositoryId: this.repositoryId,
                 categoryId: this.categoryId,
             });
+            core.debug('GraphQL Response: ' + JSON.stringify(response));
             this.id = response.data.data.createDiscussion.discussion.id;
             this.url = response.data.data.createDiscussion.discussion.url;
             this.debug(`Discussion Created id: ${this.id}, url: ${this.url}`);
